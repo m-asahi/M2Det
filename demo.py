@@ -101,6 +101,7 @@ if cam >= 0 or video:
 im_fnames = sorted((fname for fname in os.listdir(im_path) if os.path.splitext(fname)[-1] == '.jpg'))
 im_fnames = (os.path.join(im_path, fname) for fname in im_fnames)
 im_iter = iter(im_fnames)
+skipped = 0
 while True:
     if cam < 0 and not video:
         try:
@@ -141,6 +142,10 @@ while True:
 
     loop_time = time.time() - loop_start
     allboxes = np.array(allboxes)
+    if len(allboxes) == 0:
+        skipped += 1
+        print("{0} skipped. ({1} files)".format(fname, skipped))
+        continue
     boxes = allboxes[:,:4]
     scores = allboxes[:,4]
     cls_inds = allboxes[:,5]
