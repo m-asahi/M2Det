@@ -17,7 +17,7 @@ parser = argparse.ArgumentParser(description='M2Det Testing')
 parser.add_argument('-c', '--config', default='configs/m2det320_vgg.py', type=str)
 parser.add_argument('-f', '--directory', default='imgs/', help='the path to demo images')
 parser.add_argument('-m', '--trained_model', default=None, type=str, help='Trained state_dict file path to open')
-parser.add_argument('--video', default=False, type=bool, help='videofile mode')
+parser.add_argument('--video', type=str, help='videofile mode')
 parser.add_argument('--cam', default=-1, type=int, help='camera device id')
 parser.add_argument('--show', action='store_true', help='Whether to display the images')
 args = parser.parse_args()
@@ -89,7 +89,7 @@ if cam >= 0:
     video_path = './cam'
 if video:
     while True:
-        video_path = input('Please enter video path: ')
+        video_path = args.video
         capture = cv2.VideoCapture(video_path)
         if capture.isOpened():
             break
